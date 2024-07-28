@@ -34,9 +34,9 @@ class MongoDataProvider:
       del dup_data["base_salary"]
       
       if self.check_duplicate(dup_data):
-        salary_data["id"] = salary_data["employee_id"]
-        del salary_data["employee_id"]
-        self.put(salary_data, condition_column="employee_id")
+        salary_data["employee_id"] = salary_data["employee_id"]
+        # del salary_data["employee_id"]
+        self.put(salary_data)    #       , condition_column="employee_id")
       else:
         self.post(salary_data)
 
@@ -72,7 +72,7 @@ class MongoDataProvider:
             raise ValueError("No table specified in query")
         filter_data = {}
         update_data = {}
-        filter_data["filter"]={"id": or_data["id"]}
+        filter_data["filter"]={"employee_id": or_data["employee_id"]}
         for k in or_data:
             update_data["update"]={k: or_data[k]}
         print(filter_data["filter"])
@@ -111,6 +111,7 @@ class MongoDataProvider:
 
             time = int(hourly_wage)
             base_salary = time * hours
+            print(time * hours)
             self.store_salary(base_salary, emp_id)  
 
     def cal_salary_from_wages(self, wages, emp_id):
@@ -124,5 +125,6 @@ class MongoDataProvider:
             hours_worked = hours[0]["hours_worked"]
             print("Hours worked:", hours_worked)
             time = int(hours_worked)
+            print(time * wages)
             base_salary = time * wages
             self.store_salary(base_salary, emp_id)    

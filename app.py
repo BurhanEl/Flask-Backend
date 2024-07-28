@@ -188,7 +188,7 @@ def puthours():
   or_data["table"] = "hours"
   try:
     dup_data = {"table": "hours"}
-    dup_data["id"] = or_data["id"]
+    dup_data["employee_id"] = or_data["employee_id"]
     if data_provider.check_duplicate(dup_data):
       employees = data_provider.put(or_data)
 
@@ -200,9 +200,9 @@ def puthours():
       return {
         "ERROR 404": "nothing to update"
       } 
-  except:
+  except Exception as e:
     return {
-      "CHECK ":"DOCUMENTATION"
+      "CHECK ":f"DOCUMENTATION {e}"
     }
   return employees
 
@@ -212,7 +212,7 @@ def putwages():
   or_data["table"] = "wages"
   try:
     dup_data = {"table": "wages"}
-    dup_data["id"] = or_data["id"]
+    dup_data["employee_id"] = or_data["employee_id"]
     if data_provider.check_duplicate(dup_data):
       employees = data_provider.put(or_data)
       wage = or_data["hourly_wage"]
@@ -286,27 +286,6 @@ def deletehours():
       return {
         "ERROR 404": "nothing to delete"
       } 
-    # hours = data_provider.get({
-    #     "table": "hours",
-    #     "id": or_data["id"]
-    # })
-    # print("hours: ")
-    # if hours:
-    #   employee_id=hours[0][1]
-    #   salary = data_provider.get({
-    #       "table": "salary",
-    #       "employee_id": employee_id
-    #   })
-    #   print("salary: ",salary)
-    #   print("Fetched hours data:", salary)
-
-    #   if salary:
-    #       id2 = salary[0][0]
-    #       id = data_provider.get({
-    #         "table": "salary",
-    #         "id": id2
-    #     })
-    #       data_provider.delete(id)
   except Exception as e:
     return {
       "CHECK ":"DOCUMENTATION",

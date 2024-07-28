@@ -37,8 +37,8 @@ class MySQLDataProvider(DataProvider):
     dup_data = salary_data.copy()
     del dup_data["base_salary"]
     if self.check_duplicate(dup_data):
-      salary_data["id"] = salary_data["employee_id"]
-      del salary_data["employee_id"]
+      salary_data["employee_id"] = salary_data["employee_id"]
+      # del salary_data["employee_id"]
       self.put(salary_data, condition_column="employee_id")
     else:
       self.post(salary_data)
@@ -74,12 +74,12 @@ class MySQLDataProvider(DataProvider):
       query = query[:-5]
     return self.run_query(cursor, query, select=True)
 
-  def put(self, or_data, condition_column="id") -> dict:
+  def put(self, or_data, condition_column="employee_id") -> dict:
     cursor = self.conn.cursor()
     table = or_data["table"]
-    id  = or_data["id"]
+    id  = or_data["employee_id"]
     del or_data["table"]
-    del or_data["id"]
+    # del or_data["id"]
 
     query = f"UPDATE {table} SET "
 
